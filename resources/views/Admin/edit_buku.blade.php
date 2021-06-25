@@ -31,7 +31,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <h3>Edit Data Buku</h3>
             </div>
           
-            <form action="{{url('updateBuku', $book->id_buku)}}" method="post">
+            <form action="{{route('updateBuku', $book->id_buku)}}" method="post">
                 @method('PATCH')
                 {{csrf_field()}}
                 <div class="form-group">

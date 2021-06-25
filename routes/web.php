@@ -21,11 +21,10 @@ use Illuminate\Routing\RouteGroup;
 |
 */
 
-Route::get('/', function () {
-    return redirect('login');
-});
 
 //Login
+Route::get('/', [LoginController::class, 'login'])->name('check');
+
 Route::get('/login', function () {
     return view('Admin.login');
 })->name('login');
@@ -40,7 +39,7 @@ Route::group(['middleware' => ['auth','ceklevel:admin,kasir,manager']], function
     Route::get('/home', [HomeController::class, 'index'])->name('index');
 
     //Ganti Password
-    Route::get('/changePw', [PasswordController::class, 'changePw'])->name('changePw');
+    Route::get('/user/change-password', [PasswordController::class, 'changePw'])->name('changePw');
     Route::patch('/updatePw', [PasswordController::class, 'updatePw'])->name('updatePw');
 });
 
@@ -56,9 +55,10 @@ Route::group(['middleware' => ['auth','ceklevel:admin,manager']], function(){
 
         Route::get('/pasok-buku', [BookController::class, 'indexPasokBuku'])->name('indexPasokBuku');
         Route::get('/get-pasok', [BookController::class, 'getPasok'])->name('getPasok');
+        Route::get('/get-pasok-by-year', [BookController::class, 'pasokByYear'])->name('pasokByYear');
         Route::get('/input-pasok-buku', [BookController::class, 'indexInputPasokBuku'])->name('indexInputPasokBuku');
         Route::post('/input-pasok-buku', [BookController::class, 'inputPasokBuku'])->name('inputPasokBuku');
-        Route::get('/cetakPasok', [BookController::class, 'cetakPasok'])->name('cetakPasok');
+        Route::get('/cetakPasok/{tanggal}', [BookController::class, 'cetakPasok'])->name('cetakPasok');
     });
 });
 
@@ -67,6 +67,8 @@ Route::group(['middleware' => ['auth','ceklevel:kasir,manager']], function(){
     Route::prefix('penjualan')->group(function () {
         Route::get('/', [KasirController::class, 'transactions'])->name('penjualan');
         Route::get('/faktur', [KasirController::class, 'invoice'])->name('faktur');
+        Route::get('/export', [KasirController::class, 'invoiceExport'])->name('invoiceExport');
+        Route::get('/print', [KasirController::class, 'invoicePrint'])->name('invoicePrint');
     });
     Route::get('/print/{receipt}', [KasirController::class, 'printTransaction'])->name('print-transaction');
 });

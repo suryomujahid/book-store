@@ -37,7 +37,9 @@
                                         <br>
                                         <button type="button" name="btnTampil" class="form-group btn btn-danger mt-3 mr-1" onclick="getFilterYear()">Tampilkan</button>
                                         <button type="button" name="refresh" class="form-group btn btn-primary mt-3 mr-1" onclick="getPasok()">Refresh</button>
-                                        <a target="_blank" class="btn btn-success mt-3" href="{{route('cetakPasok')}}" role="button">Cetak</a>
+
+                                        <textarea id="c-tanggal" type="text" hidden></textarea>
+                                        <button type="button" class="btn btn-success mt-3" onclick="cetakPasok()">Cetak</button>
                                     </form>
                                 </div>
                             </div>
@@ -90,9 +92,23 @@
     @include('Template.script')
 
     <script>
+    function cetakPasok() {
+        let tanggal = '';
+
+        if ($('#c-tanggal').html() === '') {
+            tanggal = 'all';
+        } else {
+            tanggal = $('#tanggal').val()
+        }
+
+        window.open("{{route('cetakPasok', '')}}"+"/"+tanggal);
+    }
+
         getPasok();
 
         function getPasok() {
+            $('#c-tanggal').html('');
+
             let url = "{{route('getPasok')}}"
             $.ajax({
                 type: "get",
@@ -143,7 +159,9 @@
 
         function getFilterYear() {
             let tanggal = $('#tanggal').val();
-            let url = "{{url('admin/filter-pasok-by-year')}}"
+            $('#c-tanggal').html('based');
+
+            let url = "{{route('pasokByYear')}}"
             $.ajax({
                 type: "get",
                 url: url,

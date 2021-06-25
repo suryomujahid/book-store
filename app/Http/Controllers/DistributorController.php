@@ -14,10 +14,6 @@ class DistributorController extends Controller
         return view('Admin.input_distributor', compact('dtDistributor'));
     }
 
-    public function createDistributor(){
-        return view('Admin.create_distributor');
-    }
-
     public function simpanDistributor(Request $request){
         distributor::create([
             'nama_distributor' => $request->nama,
@@ -25,7 +21,7 @@ class DistributorController extends Controller
             'telepon' => $request->telepon,
         ]);
 
-        return redirect('pageInputDistributor')->with('toast_success', 'Data Berhasil Disimpan');
+        return redirect()->route('pageInputDistributor')->with('toast_success', 'Data Berhasil Disimpan');
     }
 
     public function editDistributor($id_distributor){
@@ -43,14 +39,14 @@ class DistributorController extends Controller
             'telepon' => $request->telepon,
         ]);
 
-        return redirect('pageInputDistributor')->with('toast_success', 'Data Berhasil Disimpan');
+        return redirect()->route('pageInputDistributor')->with('toast_success', 'Data Berhasil Diperbarui');
     }
 
     public function deleteDistributor($id_distributor){
         $dist = distributor::find($id_distributor);
         $dist->delete();
 
-        return back()->with('info', 'Data Berhasil Dihapus');
+        return redirect()->route('pageInputDistributor')->with('toast_success', 'Data Berhasil Dihapus');
     }
 
 }

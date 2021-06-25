@@ -71,7 +71,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                       <td>{{$item->alamat}}</td>
                       <td>{{$item->telepon}}</td>
                       <td>
-                        <a href="{{url('editDistributor',$item->id_distributor)}}"><i class="far fa-edit"></i></a> | <a href="{{url('deleteDistributor',$item->id_distributor)}}"><i class="fas fa-trash-alt" style="color: red;"></i></a>
+                        <a href="{{route('editDistributor',$item->id_distributor)}}"><i class="far fa-edit"></i></a> | <a href="{{route('deleteDistributor',$item->id_distributor)}}"><i class="fas fa-trash-alt" style="color: red;"></i></a>
                       </td>
                     </tr>
 

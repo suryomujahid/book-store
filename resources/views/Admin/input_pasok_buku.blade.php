@@ -62,7 +62,7 @@
                         </div>
 
                         <div class="card-body mt-3">
-                            <table class="table table-hover table-bordered">
+                            <table class="table">
                                 <thead>
                                     <th>No</th>
                                     <th>Nama Distributor</th>

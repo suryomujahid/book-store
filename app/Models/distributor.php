@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class distributor extends Model
 {
     protected $table = "distributors";
-    protected $primarykey = "id_distributor";
+    protected $primaryKey = "id_distributor";
     protected $fillable = [
         'id_distributor', 'nama_distributor', 'alamat', 'telepon'
     ];

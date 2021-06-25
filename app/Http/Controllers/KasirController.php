@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\InvoiceExport;
 use App\Models\Book as Book;
 use App\Models\Transaction as Transaction;
 use App\Models\Profile;
@@ -9,6 +10,7 @@ use App\Models\TempTransaction as TempTransaction;
 use App\Models\User;
 use Carbon\Carbon;
 use Faker\Factory as Faker;
+use Maatwebsite\Excel\Facades\Excel;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -108,5 +110,19 @@ class KasirController extends Controller
         }
 
         return view('Kasir.invoice', compact('transactions'));
+    }
+
+    public function invoicePrint()
+    {
+        $transactions = Transaction::all();
+        foreach ($transactions as $transaction) {
+            $transaction['book'] = $transaction->Book;
+        }
+
+        return view('Laporan.cetak_transaksi', compact('transactions'));
+    }
+
+    public function invoiceExport(){
+        return Excel::download(new InvoiceExport, 'penjualan-buku.xlsx');
     }
 }

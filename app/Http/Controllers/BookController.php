@@ -68,14 +68,14 @@ class BookController extends Controller
             'diskon' => $request->diskon,
         ]);
 
-        return redirect('pageInputBuku')->with('toast_success', 'Data Berhasil Disimpan');
+        return redirect()->route('pageInputBuku')->with('toast_success', 'Data Berhasil Disimpan');
     }
 
     public function deleteBuku($id_buku){
         $book = Book::where('id_buku', $id_buku);
         $book->delete();
 
-        return back()->with('info', 'Data Berhasil Dihapus');
+        return back()->with('toast_success', 'Data Berhasil Dihapus');
     }
 
     public function lapBukuSemua(){
@@ -144,7 +144,14 @@ class BookController extends Controller
         }
         array_unique((array)$dates);
 
-        return view('Laporan.lap_pasok_buku', compact('user', 'dates'));
+        $dataSuply = [];
+        foreach($suplys as $suply){
+            $suply['distributor'] = $suply->distributor;
+            $suply['book'] = $suply->book;
+            array_push($dataSuply , $suply);
+        }
+
+        return view('Laporan.lap_pasok_buku', compact('user', 'dates', 'dataSuply'));
     }
 
     public function getPasok ()
@@ -211,10 +218,14 @@ class BookController extends Controller
         return back()->with('toast_success', 'Data Berhasil Ditambahkan');
     }
 
-    public function cetakPasok(){
-        $data = Supply::all();
+    public function cetakPasok($tanggal){
+        if ($tanggal != 'all') {
+            $tanggal = $tanggal;
 
-        return view('Laporan.cetak_pasok', compact('data'));
+            return view('Laporan.cetak_pasok', compact('tanggal'));
+        }
+
+        return view('Laporan.cetak_pasok');
     }
 
 }

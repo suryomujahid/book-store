@@ -31,7 +31,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <h3>Edit Data Distributor</h3>
             </div>
           
-            <form action="{{url('updateDistributor', $dist->id_distributor)}}" method="post">
+            <form action="{{route('updateDistributor', $dist->id_distributor)}}" method="post">
                 @method('PATCH')
                 {{csrf_field()}}
                 <div class="form-group">

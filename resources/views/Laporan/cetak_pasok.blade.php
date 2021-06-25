@@ -16,6 +16,10 @@
 
         <div class="row">
 
+        @if (isset($tanggal))
+        <input id="tanggal" type="text" value="{{$tanggal}}" hidden>
+        @endif
+
         <div class="table-responsive">
                 <table class=" table table-hover table-bordered">
                     <thead>
@@ -40,6 +44,61 @@
 
 
 @include('Template.script')
+
+@if(isset($tanggal))
+    <script>
+    getFilterYear()
+    function getFilterYear(){
+        let tanggal = $('#tanggal').val();
+        let url = "{{route('pasokByYear')}}"
+        $.ajax({
+            type: "get",
+            url: url,
+            data: {tanggal},
+            beforeSend: function() {
+                html = `
+                    <tr>
+                        <td colspan="10" class="text-center">Sedang mencari data</td>
+                    </tr>
+                `
+                $('#data_suply').html(html);
+            },
+            success: function (response) {
+                $('#data_suply').html('');
+                if(response == ''){
+                        html = `
+                        <tr>
+                            <td colspan="10" class="text-center">Tidak ada data.</td>
+                        </tr>
+                    `
+                    $('#data_suply').html(html);
+                }
+                no = 1
+                $.each(response, function (i, val) {
+                    html = `
+                    <tr>
+                        <td>${no}</td>
+                        <td>${val.distributor.nama_distributor}</td>
+                        <td>${val.book.judul}</td>
+                        <td>${val.book.noisbn}</td>
+                        <td>${val.book.penulis}</td>
+                        <td>${val.book.penerbit}</td>
+                        <td>${val.book.harga_jual}</td>
+                        <td>${val.book.stok}</td>
+                        <td>${val.jumlah}</td>
+                        <td>${val.tanggal}</td>
+                    </tr>
+                    `
+                    $("#data_suply").append(html)
+                    no++
+                });
+
+                window.print();
+            }
+        });
+    }
+    </script>
+@else
     <script>
     getPasok();
     function getPasok(){
@@ -86,59 +145,14 @@
                     `
                     $("#data_suply").append(html)
                     no++
-                })
+                });
+
+                window.print();
             }
         });
     }
-    function getFilterYear(){
-        let tanggal = $('#tanggal').val();
-        let url = "{{url('admin/filter-pasok-by-year')}}"
-        $.ajax({
-            type: "get",
-            url: url,
-            data: {tanggal},
-            beforeSend: function() {
-                html = `
-                    <tr>
-                        <td colspan="10" class="text-center">Sedang mencari data</td>
-                    </tr>
-                `
-                $('#data_suply').html(html);
-            },
-            success: function (response) {
-                $('#data_suply').html('');
-                if(response == ''){
-                        html = `
-                        <tr>
-                            <td colspan="10" class="text-center">Tidak ada data.</td>
-                        </tr>
-                    `
-                    $('#data_suply').html(html);
-                }
-                no = 1
-                $.each(response, function (i, val) {
-                    html = `
-                    <tr>
-                        <td>${no}</td>
-                        <td>${val.distributor.nama_distributor}</td>
-                        <td>${val.book.judul}</td>
-                        <td>${val.book.noisbn}</td>
-                        <td>${val.book.penulis}</td>
-                        <td>${val.book.penerbit}</td>
-                        <td>${val.book.harga_jual}</td>
-                        <td>${val.book.stok}</td>
-                        <td>${val.jumlah}</td>
-                        <td>${val.tanggal}</td>
-                    </tr>
-                    `
-                    $("#data_suply").append(html)
-                    no++
-                })
-            }
-        });
-    }
-    window.print();
 </script>
+@endif
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>

@@ -9,7 +9,7 @@
         </tr>
         <tr>
             <td colspan="4"><strong>No Faktur :</strong> {{$receipt->id_penjualan}}</td>
-            <td colspan="3" align="right"> 07-03-2017</td>
+            <td colspan="3" align="right"> {{$receipt->tanggal}}</td>
         </tr>
         <tr>
             <td colspan="7"><strong>Kasir :</strong> {{$cashier->name}}</td>

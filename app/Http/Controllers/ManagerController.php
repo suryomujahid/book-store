@@ -6,6 +6,7 @@ use App\Models\Profile;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Hash;
 
 use Carbon\Carbon;
 
@@ -78,7 +79,7 @@ class ManagerController extends Controller
 
         $userCreate = User::create([
             'email' => $request->email,
-            'password' => $request->password,
+            'password' => Hash::make($request->password),
             'alamat' => $request->address,
             'status' => $request->status,
             'telepon' => $request->phone,

@@ -20,8 +20,8 @@
                             </div>
 
                             <div class="my-4">
-                                <button type="button" class="btn btn-primary">Cetak</button>
-                                <button type="button" class="btn btn-success">Export Excel</button>
+                                <a href="{{route('invoicePrint')}}" target="_blank" class="btn btn-primary">Cetak</a>
+                                <a href="{{route('invoiceExport')}}"  class="btn btn-success">Export Excel</a>
                             </div>
 
                             <table id="table">

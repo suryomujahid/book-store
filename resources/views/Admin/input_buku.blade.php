@@ -34,7 +34,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </div>
 
 
-                <form action="{{url('simpanBuku')}}" method="post">
+                <form action="{{route('simpanBuku')}}" method="post">
                   {{csrf_field()}}
                   <div class="form-group">
                     <h6>Judul Buku</h6>
@@ -104,7 +104,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                       <td>{{$book->harga_pokok}}</td>
                       <td>{{$book->harga_jual}}</td>
                       <td>{{$book->diskon}}</td>
-                      <td><a href="{{url('editBuku',$book->id_buku)}}"><i class="far fa-edit"></i></a> | <a href="{{url('deleteBuku',$book->id_buku)}}"><i class="fas fa-trash-alt" style="color: red;"></i></a></td>
+                      <td><a href="{{route('editBuku',$book->id_buku)}}"><i class="far fa-edit"></i></a> | <a href="{{route('deleteBuku',$book->id_buku)}}"><i class="fas fa-trash-alt" style="color: red;"></i></a></td>
                     </tr>
                     @endforeach
 
